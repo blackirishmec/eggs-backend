@@ -1,9 +1,9 @@
 import { api, APIError } from 'encore.dev/api';
 
-import type { FetchDataResponse } from './interface';
+import type { FetchDataResponse } from '@/eggs/interface';
 
-import EggsService from './eggs.service';
-import { sanitizeErrorString } from './utilities/sanitizeErrorString';
+import EggsService from '@/eggs/service';
+import { sanitizeErrorString } from '@/eggs/utilities/sanitizeErrorString';
 
 /**
  * Get Egg Price, Median CPI, and Federal Nonfarm Minimum Wage data.
