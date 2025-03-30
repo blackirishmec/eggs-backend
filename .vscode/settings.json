@@ -1,6 +1,8 @@
 {
 	"cSpell.words": [
-		"encoredev"
+		"autoincrement",
+		"encoredev",
+		"sqldb"
 	],
 	"editor.formatOnSave": true,
 	"[typescript]": {

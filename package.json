@@ -1,32 +1,35 @@
 {
-  "name": "encore-ts-starter",
-  "private": true,
-  "version": "0.0.1",
-  "description": "Encore Typescript Starter",
-  "license": "MPL-2.0",
-  "type": "module",
-  "scripts": {
-    "test": "vitest"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.23.0",
-    "@types/node": "^20.17.28",
-    "@typescript-eslint/parser": "^8.28.0",
-    "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-import-resolver-typescript": "^4.3.1",
-    "eslint-plugin-import": "^2.31.0",
-    "globals": "^16.0.0",
-    "jiti": "^2.4.2",
-    "prettier": "3.5.3",
-    "typescript": "^5.2.2",
-    "typescript-eslint": "^8.28.0",
-    "vitest": "^1.5.0"
-  },
-  "dependencies": {
-    "encore.dev": "^1.46.14"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.13.0"
-  }
+	"name": "encore-ts-starter",
+	"private": true,
+	"version": "0.0.1",
+	"description": "Encore Typescript Starter",
+	"license": "MPL-2.0",
+	"type": "module",
+	"scripts": {
+		"test": "vitest",
+		"postinstall": "npx prisma generate --schema=users/prisma/schema.prisma"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.23.0",
+		"@types/node": "^20.17.28",
+		"@typescript-eslint/parser": "^8.28.0",
+		"eslint": "^9.23.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-import-resolver-typescript": "^4.3.1",
+		"eslint-plugin-import": "^2.31.0",
+		"globals": "^16.0.0",
+		"jiti": "^2.4.2",
+		"prettier": "3.5.3",
+		"prisma": "^6.5.0",
+		"typescript": "^5.2.2",
+		"typescript-eslint": "^8.28.0",
+		"vitest": "^1.5.0"
+	},
+	"dependencies": {
+		"@prisma/client": "^6.5.0",
+		"encore.dev": "^1.46.14"
+	},
+	"optionalDependencies": {
+		"@rollup/rollup-linux-x64-gnu": "^4.13.0"
+	}
 }
