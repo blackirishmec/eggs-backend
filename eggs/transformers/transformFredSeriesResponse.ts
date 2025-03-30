@@ -8,5 +8,6 @@ export function transformFredSeriesResponse(
 	return {
 		...fredSeriesResponse.data,
 		lastUpdated: fredSeriesResponse.data.last_updated,
+		lastDataFetch: null,
 	};
 }
