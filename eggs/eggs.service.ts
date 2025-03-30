@@ -44,9 +44,23 @@ const EggsService = {
 				};
 			}
 
+			const existingEggPriceRecordDateObjects = (
+				await prisma.eggPrice.findMany({
+					select: { date: true },
+				})
+			).map(
+				existingEggPriceRecordDateObject =>
+					existingEggPriceRecordDateObject.date,
+			);
+
 			await prisma.$transaction([
 				prisma.eggPrice.createMany({
-					data: eggPriceFredData,
+					data: eggPriceFredData.filter(
+						eggPriceFredDataObject =>
+							!existingEggPriceRecordDateObjects.includes(
+								eggPriceFredDataObject.date,
+							),
+					),
 					skipDuplicates: true,
 				}),
 				prisma.fredSeries.update({

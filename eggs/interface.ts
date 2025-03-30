@@ -68,9 +68,11 @@ export interface FredSeriesObservationsResponse {
 }
 
 export interface FredSeriesResponse {
-	id: string;
-	title: string;
-	frequency: string;
-	units: string;
-	last_updated: string;
+	seriess: {
+		id: string;
+		title: string;
+		frequency: string;
+		units: string;
+		last_updated: string;
+	}[];
 }
