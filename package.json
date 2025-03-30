@@ -27,6 +27,8 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.22.0",
+		"axios": "^1.8.4",
+		"dotenv": "^16.4.7",
 		"encore.dev": "^1.46.14"
 	},
 	"optionalDependencies": {

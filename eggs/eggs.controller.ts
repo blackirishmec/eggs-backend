@@ -1,7 +1,8 @@
 import { api, APIError } from 'encore.dev/api';
 
-import type { DataResponse } from './eggs.interface';
+import type { FetchDataResponse } from './interface';
 
+import EggsService from './eggs.service';
 import { sanitizeErrorString } from './utilities/sanitizeErrorString';
 
 /**
@@ -9,9 +10,9 @@ import { sanitizeErrorString } from './utilities/sanitizeErrorString';
  */
 export const data = api(
 	{ expose: true, method: 'GET', path: '/data' },
-	async (): Promise<DataResponse> => {
+	async (): Promise<FetchDataResponse> => {
 		try {
-			return await AQIService.readCityNames();
+			return await EggsService.fetchData();
 		} catch (error) {
 			const errorString = sanitizeErrorString(error);
 			throw APIError.aborted(errorString);
