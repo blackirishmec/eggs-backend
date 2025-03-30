@@ -1,7 +1,4 @@
-import type {
-	FredData,
-	FredSeriesObservationsResponse,
-} from '@/eggs/interface';
+import type { FredSeriesObservationsResponse } from '@/eggs/interface';
 import type { AxiosResponse } from 'axios';
 
 export function transformFredSeriesObservationResponse(
@@ -9,6 +6,9 @@ export function transformFredSeriesObservationResponse(
 		FredSeriesObservationsResponse,
 		unknown
 	>,
-): FredData[] {
-	return fredSeriesObservationResponse.data.observations;
+): { date: string; value: number }[] {
+	return fredSeriesObservationResponse.data.observations.map(obs => ({
+		date: obs.date,
+		value: parseFloat(obs.value),
+	}));
 }

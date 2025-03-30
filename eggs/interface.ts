@@ -24,7 +24,7 @@ export interface FederalNonfarmMinimumHourlyWage {
 
 export interface FredData {
 	date: string;
-	value: number;
+	value: string;
 }
 
 export interface FetchDataResponse {

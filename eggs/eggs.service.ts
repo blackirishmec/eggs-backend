@@ -8,7 +8,9 @@ import type {
 } from '@prisma/client';
 
 import { prisma } from '@/eggs/database';
+import { fetchEggPriceFredData } from '@/eggs/utilities/api/fetchEggPriceFredData';
 import { fetchFederalNonfarmMinimumHourlyWageFredData } from '@/eggs/utilities/api/fetchFederalNonfarmMinimumHourlyWageFredData';
+import { fetchMedianCPIFredData } from '@/eggs/utilities/api/fetchMedianCPIFredData';
 
 const env = dotenv.config();
 if (env.error) {
@@ -49,8 +51,7 @@ const EggsService = {
 
 	fetchData: async (): Promise<FetchDataResponse> => {
 		/** Egg Prices */
-		const eggPriceFredData =
-			await fetchFederalNonfarmMinimumHourlyWageFredData();
+		const eggPriceFredData = await fetchEggPriceFredData();
 
 		if (eggPriceFredData.length < 1) {
 			return {
@@ -62,6 +63,7 @@ const EggsService = {
 		const eggPriceRecords: EggPrice[] =
 			await prisma.eggPrice.createManyAndReturn({
 				data: eggPriceFredData,
+				skipDuplicates: true,
 			});
 
 		/** Federal Nonfarm Minimum Hourly Wage */
@@ -82,8 +84,7 @@ const EggsService = {
 			});
 
 		/** Median CPI */
-		const medianCPIFredData =
-			await fetchFederalNonfarmMinimumHourlyWageFredData();
+		const medianCPIFredData = await fetchMedianCPIFredData();
 
 		if (medianCPIFredData.length < 1) {
 			return {

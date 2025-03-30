@@ -37,3 +37,13 @@ model FederalNonfarmMinimumHourlyWage {
 
     @@map("federal_nonfarm_minimum_hourly_wage")
 }
+
+model FredSeries {
+	id 	        String  @id
+	title       String 
+	frequency   String
+	units       String
+	lastUpdated String
+
+	@@map("fred_series")
+}
