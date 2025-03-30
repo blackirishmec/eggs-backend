@@ -39,7 +39,7 @@ model FederalNonfarmMinimumHourlyWage {
 }
 
 model FredSeries {
-	id 	        Int    @id
+	id 	        String @id
 	title       String
 	frequency   String
 	units       String
