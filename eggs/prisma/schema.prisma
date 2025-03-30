@@ -39,11 +39,11 @@ model FederalNonfarmMinimumHourlyWage {
 }
 
 model FredSeries {
-	id 	        String  @id
-	title       String 
+	id 	        Int    @id
+	title       String
 	frequency   String
 	units       String
-	lastUpdated String
+	lastUpdated String @map("last_updated")
 
 	@@map("fred_series")
 }
