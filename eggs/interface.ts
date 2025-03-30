@@ -1,3 +1,13 @@
+export interface FredSeries {
+	id?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+	title: string;
+	frequency: string;
+	units: string;
+	lastUpdated: string;
+}
+
 export interface EggPrice {
 	id?: number;
 	date: string;
@@ -55,4 +65,12 @@ export interface GetDataResponse {
 
 export interface FredSeriesObservationsResponse {
 	observations: FredData[];
+}
+
+export interface FredSeriesResponse {
+	id: string;
+	title: string;
+	frequency: string;
+	units: string;
+	last_updated: string;
 }

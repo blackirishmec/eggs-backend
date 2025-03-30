@@ -11,6 +11,7 @@ import { prisma } from '@/eggs/database';
 import { fetchEggPriceFredData } from '@/eggs/utilities/api/fetchEggPriceFredData';
 import { fetchFederalNonfarmMinimumHourlyWageFredData } from '@/eggs/utilities/api/fetchFederalNonfarmMinimumHourlyWageFredData';
 import { fetchMedianCPIFredData } from '@/eggs/utilities/api/fetchMedianCPIFredData';
+import { getOrFetchFredSeries } from '@/eggs/utilities/api/getOrFetchFredSeries';
 
 const env = dotenv.config();
 if (env.error) {
@@ -50,6 +51,13 @@ const EggsService = {
 	// },
 
 	fetchData: async (): Promise<FetchDataResponse> => {
+		/** Fred Series */
+		const {
+			eggPriceFredSeriesRecord,
+			medianCPIFredSeriesRecord,
+			federalNonfarmMinimumHourlyWageFredSeriesRecord,
+		} = await getOrFetchFredSeries();
+
 		/** Egg Prices */
 		const eggPriceFredData = await fetchEggPriceFredData();
 
