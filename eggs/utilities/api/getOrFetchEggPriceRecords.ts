@@ -4,11 +4,12 @@ import type { EggPrice } from '@prisma/client';
 
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
 import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSeriesObservationData';
-import { getOrFetchEggPriceFredSeries } from '@/eggs/utilities/api/getOrFetchEggPriceFredSeriesRecord';
+import { getOrFetchFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
 export async function getOrFetchEggPriceRecords(): Promise<EggPrice[]> {
-	const eggPriceFredSeriesRecord = await getOrFetchEggPriceFredSeries();
+	const eggPriceFredSeriesRecord =
+		await getOrFetchFredSeriesRecord('APU0000708111');
 
 	if (
 		eggPriceFredSeriesRecord.lastDataFetch === null ||
