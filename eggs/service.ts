@@ -8,6 +8,7 @@ import type {
 import { getOrFetchCPIForAllUrbanConsumersRecords } from '@/eggs/utilities/api/getOrFetchCPIForAllUrbanConsumersRecords';
 import { getOrFetchEggPriceRecords } from '@/eggs/utilities/api/getOrFetchEggPriceRecords';
 import { getOrFetchFederalNonfarmMinimumHourlyWageRecords } from '@/eggs/utilities/api/getOrFetchFederalNonfarmMinimumHourlyWageRecords';
+import { getMinimumEggsByMonth } from '@/eggs/utilities/getMinimumEggsByMonth';
 
 const env = dotenv.config();
 if (env.error) {
@@ -37,18 +38,16 @@ const EggsService = {
 	getCurrentMinimumEggs: async (): Promise<GetCurrentMinimumEggsResponse> => {
 		const eggPriceRecords = await getOrFetchEggPriceRecords();
 
-		const federalNonfarmMinimumHourlyWageRecords =
-			await getOrFetchFederalNonfarmMinimumHourlyWageRecords();
-
-		const mostRecentEggPriceRecord = eggPriceRecords[0];
-		const mostRecentFederalNonfarmMinimumHourlyWageRecord =
-			federalNonfarmMinimumHourlyWageRecords[0];
-
-		const mostRecentEggPrice = mostRecentEggPriceRecord.value / 12;
-		const mostRecentFederalNonfarmMinimumHourlyWage =
-			mostRecentFederalNonfarmMinimumHourlyWageRecord.value;
+		const mostRecentEggPriceRecordDate = eggPriceRecords[0].date;
 		const mostRecentEggsPerFederalNonfarmMinimumHourlyWage =
-			mostRecentFederalNonfarmMinimumHourlyWage / mostRecentEggPrice;
+			await getMinimumEggsByMonth(mostRecentEggPriceRecordDate);
+
+		if (mostRecentEggsPerFederalNonfarmMinimumHourlyWage === undefined)
+			return {
+				success: false,
+				message:
+					'mostRecentEggsPerFederalNonfarmMinimumHourlyWage is undefined',
+			};
 
 		return {
 			success: true,

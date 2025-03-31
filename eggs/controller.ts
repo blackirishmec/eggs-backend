@@ -37,3 +37,18 @@ export const currentMinimumEggs = api(
 		}
 	},
 );
+
+/**
+ * Get the data set of the trend of number of eggs equal to the current US Federal Nonfarm Minimum Wage, adjusted for inflation.
+ */
+export const minimumEggsTrendData = api(
+	{ expose: true, method: 'GET', path: '/minimum-eggs-trend-data' },
+	async (): Promise<GetCurrentMinimumEggsResponse> => {
+		try {
+			return await EggsService.getMinimumEggsTrendData();
+		} catch (error) {
+			const errorString = sanitizeErrorString(error);
+			throw APIError.aborted(errorString);
+		}
+	},
+);
