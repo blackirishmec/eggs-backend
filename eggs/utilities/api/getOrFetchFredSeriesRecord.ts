@@ -18,7 +18,7 @@ export async function getOrFetchFredSeriesRecord(
 	if (fredSeriesRecord === null) {
 		const fredSeriesAxiosResponse =
 			await axiosInstance.get<FredSeriesResponse>(
-				`series?series_id=${fredSeriesId}&api_key=${process.env.FRED_API_KEY}&file_type=json&sort_order=desc&observation_start=2005-01-01`,
+				`series?series_id=${fredSeriesId}&api_key=${process.env.FRED_API_KEY}&file_type=json&sort_order=desc&observation_start=2009-09-01`,
 			);
 
 		const fredSeriesResponse = transformFredSeriesResponse(
