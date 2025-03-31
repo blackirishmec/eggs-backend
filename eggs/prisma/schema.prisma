@@ -48,3 +48,11 @@ model FredSeries {
 
 	@@map("fred_series")
 }
+
+model CPIForAllUrbanConsumers {
+    id    Int    @id @default(autoincrement())
+    date  String @unique
+    value Float
+
+    @@map("cpi_for_all_urban_consumers")
+}
