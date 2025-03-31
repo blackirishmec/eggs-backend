@@ -26,8 +26,8 @@ export const data = api(
 /**
  * Get the current number of eggs equal to the current US Federal Nonfarm Minimum Wage, adjusted for inflation.
  */
-export const minimumEggs = api(
-	{ expose: true, method: 'GET', path: '/minimum-eggs' },
+export const currentMinimumEggs = api(
+	{ expose: true, method: 'GET', path: '/current-minimum-eggs' },
 	async (): Promise<GetCurrentMinimumEggsResponse> => {
 		try {
 			return await EggsService.getCurrentMinimumEggs();
