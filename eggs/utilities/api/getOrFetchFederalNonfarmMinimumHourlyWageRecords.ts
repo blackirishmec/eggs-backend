@@ -1,4 +1,5 @@
 import { prisma } from '@/eggs/database';
+
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
 import { fetchFederalNonfarmMinimumHourlyWageFredData } from '@/eggs/utilities/api/fetchFederalNonfarmMinimumHourlyWageFredData';
 import { getOrFetchFederalNonfarmMinimumHourlyWageFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFederalNonfarmMinimumHourlyWageFredSeriesRecord';
@@ -18,9 +19,24 @@ export async function getOrFetchFederalNonfarmMinimumHourlyWageRecords() {
 		const federalNonfarmMinimumHourlyWageFredData =
 			await fetchFederalNonfarmMinimumHourlyWageFredData();
 
+		const existingFederalNonfarmMinimumHourlyWageRecordDateObjects = (
+			await prisma.federalNonfarmMinimumHourlyWage.findMany({
+				select: { date: true },
+			})
+		).map(
+			existingFederalNonfarmMinimumHourlyWageRecordDateObject =>
+				existingFederalNonfarmMinimumHourlyWageRecordDateObject.date,
+		);
+
 		await prisma.$transaction([
 			prisma.federalNonfarmMinimumHourlyWage.createMany({
-				data: federalNonfarmMinimumHourlyWageFredData,
+				data: federalNonfarmMinimumHourlyWageFredData.filter(
+					federalNonfarmMinimumHourlyWageFredDataObject =>
+						!existingFederalNonfarmMinimumHourlyWageRecordDateObjects.includes(
+							federalNonfarmMinimumHourlyWageFredDataObject.date,
+						),
+				),
+				skipDuplicates: true,
 			}),
 			prisma.fredSeries.update({
 				where: {
