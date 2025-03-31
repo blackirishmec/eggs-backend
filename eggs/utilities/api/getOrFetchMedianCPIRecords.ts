@@ -18,9 +18,24 @@ export async function getOrFetchMedianCPIRecords(): Promise<MedianCPI[]> {
 		const medianCPIFredData =
 			await fetchFederalNonfarmMinimumHourlyWageFredData();
 
+		const existingMedianCPIRecordDateObjects = (
+			await prisma.medianCPI.findMany({
+				select: { date: true },
+			})
+		).map(
+			existingMedianCPIRecordDateObject =>
+				existingMedianCPIRecordDateObject.date,
+		);
+
 		await prisma.$transaction([
 			prisma.medianCPI.createMany({
-				data: medianCPIFredData,
+				data: medianCPIFredData.filter(
+					medianCPIFredDataObject =>
+						!existingMedianCPIRecordDateObjects.includes(
+							medianCPIFredDataObject.date,
+						),
+				),
+				skipDuplicates: true,
 			}),
 			prisma.fredSeries.update({
 				where: {
