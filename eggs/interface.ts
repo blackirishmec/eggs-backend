@@ -1,3 +1,5 @@
+import type { Query } from 'encore.dev/api';
+
 export interface FredSeries {
 	id?: string;
 	createdAt?: Date;
@@ -69,6 +71,22 @@ export interface GetCurrentMinimumEggsResponse {
 	};
 }
 
+export interface MinimumEggsTrendDataObject {
+	date: string;
+	value: number;
+}
+
+export interface GetMinimumEggsTrendDataResponse {
+	/** Indicates if the request was successful */
+	success: boolean;
+	/** Error message if the request was not successful */
+	message?: string;
+	/** The data set of the trend of number of eggs equal to the current US Federal Nonfarm Minimum Wage, adjusted for inflation */
+	result?: {
+		minimumEggsTrendData: MinimumEggsTrendDataObject[];
+	};
+}
+
 export interface GetDataResponse {
 	/** Indicates if the request was successful */
 	success: boolean;
@@ -94,4 +112,9 @@ export interface FredSeriesResponse {
 		units: string;
 		last_updated: string;
 	}[];
+}
+
+export interface MinimumEggsTrendDataParams {
+	/** The flag for adjusting trend data by inflation using CPI For All Urban Consumers */
+	ADJUSTED?: Query<boolean>;
 }

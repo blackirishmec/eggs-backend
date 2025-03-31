@@ -3,12 +3,14 @@ import dotenv from 'dotenv';
 import type {
 	FetchDataResponse,
 	GetCurrentMinimumEggsResponse,
+	GetMinimumEggsTrendDataResponse,
 } from '@/eggs/interface';
 
 import { getOrFetchCPIForAllUrbanConsumersRecords } from '@/eggs/utilities/api/getOrFetchCPIForAllUrbanConsumersRecords';
 import { getOrFetchEggPriceRecords } from '@/eggs/utilities/api/getOrFetchEggPriceRecords';
 import { getOrFetchFederalNonfarmMinimumHourlyWageRecords } from '@/eggs/utilities/api/getOrFetchFederalNonfarmMinimumHourlyWageRecords';
 import { getMinimumEggsByMonth } from '@/eggs/utilities/getMinimumEggsByMonth';
+import { getMinimumEggsTrendData } from '@/eggs/utilities/getMinimumEggsTrendData';
 
 const env = dotenv.config();
 if (env.error) {
@@ -53,6 +55,19 @@ const EggsService = {
 			success: true,
 			result: {
 				minimumEggs: mostRecentEggsPerFederalNonfarmMinimumHourlyWage,
+			},
+		};
+	},
+
+	getMinimumEggsTrendData: async (
+		ADJUSTED: boolean = false,
+	): Promise<GetMinimumEggsTrendDataResponse> => {
+		const minimumEggsTrendData = await getMinimumEggsTrendData(ADJUSTED);
+
+		return {
+			success: true,
+			result: {
+				minimumEggsTrendData,
 			},
 		};
 	},

@@ -3,13 +3,15 @@ import { api, APIError } from 'encore.dev/api';
 import type {
 	FetchDataResponse,
 	GetCurrentMinimumEggsResponse,
+	GetMinimumEggsTrendDataResponse,
+	MinimumEggsTrendDataParams,
 } from '@/eggs/interface';
 
 import EggsService from '@/eggs/service';
 import { sanitizeErrorString } from '@/eggs/utilities/sanitizeErrorString';
 
 /**
- * Get Egg Price, Median CPI, and Federal Nonfarm Minimum Wage data.
+ * Get Egg Price, CPI For All Urban Consumers, and Federal Nonfarm Minimum Wage data.
  */
 export const data = api(
 	{ expose: true, method: 'GET', path: '/data' },
@@ -24,7 +26,7 @@ export const data = api(
 );
 
 /**
- * Get the current number of eggs equal to the current US Federal Nonfarm Minimum Wage, adjusted for inflation.
+ * Get the current number of eggs equal to the current US Federal Nonfarm Minimum Wage.
  */
 export const currentMinimumEggs = api(
 	{ expose: true, method: 'GET', path: '/current-minimum-eggs' },
@@ -39,13 +41,15 @@ export const currentMinimumEggs = api(
 );
 
 /**
- * Get the data set of the trend of number of eggs equal to the current US Federal Nonfarm Minimum Wage, adjusted for inflation.
+ * Get the data set of the trend of number of eggs equal to the current US Federal Nonfarm Minimum Wage, optionally adjusted for inflation.
  */
 export const minimumEggsTrendData = api(
 	{ expose: true, method: 'GET', path: '/minimum-eggs-trend-data' },
-	async (): Promise<GetCurrentMinimumEggsResponse> => {
+	async ({
+		ADJUSTED = false,
+	}: MinimumEggsTrendDataParams): Promise<GetMinimumEggsTrendDataResponse> => {
 		try {
-			return await EggsService.getMinimumEggsTrendData();
+			return await EggsService.getMinimumEggsTrendData(ADJUSTED);
 		} catch (error) {
 			const errorString = sanitizeErrorString(error);
 			throw APIError.aborted(errorString);
