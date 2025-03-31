@@ -5,9 +5,9 @@ import type {
 	GetMinimumEggsResponse,
 } from '@/eggs/interface';
 
+import { getOrFetchCPIForAllUrbanConsumersRecords } from '@/eggs/utilities/api/getOrFetchCPIForAllUrbanConsumersRecords';
 import { getOrFetchEggPriceRecords } from '@/eggs/utilities/api/getOrFetchEggPriceRecords';
 import { getOrFetchFederalNonfarmMinimumHourlyWageRecords } from '@/eggs/utilities/api/getOrFetchFederalNonfarmMinimumHourlyWageRecords';
-import { getOrFetchMedianCPIRecords } from '@/eggs/utilities/api/getOrFetchMedianCPIRecords';
 
 const env = dotenv.config();
 if (env.error) {
@@ -18,7 +18,8 @@ const EggsService = {
 	fetchData: async (): Promise<FetchDataResponse> => {
 		const eggPriceRecords = await getOrFetchEggPriceRecords();
 
-		const medianCPIRecords = await getOrFetchMedianCPIRecords();
+		const cPIForAllUrbanConsumersRecords =
+			await getOrFetchCPIForAllUrbanConsumersRecords();
 
 		const federalNonfarmMinimumHourlyWageRecords =
 			await getOrFetchFederalNonfarmMinimumHourlyWageRecords();
@@ -27,7 +28,7 @@ const EggsService = {
 			success: true,
 			result: {
 				eggPriceRecords,
-				medianCPIRecords,
+				cPIForAllUrbanConsumersRecords,
 				federalNonfarmMinimumHourlyWageRecords,
 			},
 		};
@@ -36,13 +37,15 @@ const EggsService = {
 	getMinimumEggs: async (): Promise<GetMinimumEggsResponse> => {
 		const eggPriceRecords = await getOrFetchEggPriceRecords();
 
-		const medianCPIRecords = await getOrFetchMedianCPIRecords();
+		const cPIForAllUrbanConsumersRecords =
+			await getOrFetchCPIForAllUrbanConsumersRecords();
 
 		const federalNonfarmMinimumHourlyWageRecords =
 			await getOrFetchFederalNonfarmMinimumHourlyWageRecords();
 
 		const mostRecentEggPriceRecord = eggPriceRecords[0];
-		const mostRecentMedianCPIRecord = medianCPIRecords[0];
+		const mostRecentCPIForAllUrbanConsumersRecord =
+			cPIForAllUrbanConsumersRecords[0];
 		const mostRecentFederalNonfarmMinimumHourlyWageRecord =
 			federalNonfarmMinimumHourlyWageRecords[0];
 

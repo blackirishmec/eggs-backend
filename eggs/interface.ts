@@ -24,6 +24,14 @@ export interface MedianCPI {
 	updatedAt?: Date;
 }
 
+export interface CPIForAllUrbanConsumers {
+	id?: number;
+	date: string;
+	value: number;
+	createdAt?: Date;
+	updatedAt?: Date;
+}
+
 export interface FederalNonfarmMinimumHourlyWage {
 	id?: number;
 	date: string;
@@ -45,7 +53,7 @@ export interface FetchDataResponse {
 	/** Data sets */
 	result?: {
 		eggPriceRecords: EggPrice[];
-		medianCPIRecords: MedianCPI[];
+		cPIForAllUrbanConsumersRecords: CPIForAllUrbanConsumers[];
 		federalNonfarmMinimumHourlyWageRecords: FederalNonfarmMinimumHourlyWage[];
 	};
 }
@@ -69,7 +77,7 @@ export interface GetDataResponse {
 	/** Data sets */
 	result?: {
 		eggPriceData: FredData[];
-		medianCPIData: FredData[];
+		cPIForAllUrbanConsumersRecords: FredData[];
 		federalNonfarmMinimumHourlyWageData: FredData[];
 	};
 }
