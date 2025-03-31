@@ -4,11 +4,12 @@ import type { MedianCPI } from '@prisma/client';
 
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
 import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSeriesObservationData';
-import { getOrFetchMedianCPIFredSeries } from '@/eggs/utilities/api/getOrFetchMedianCPIFredSeriesRecord';
+import { getOrFetchFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
 export async function getOrFetchMedianCPIRecords(): Promise<MedianCPI[]> {
-	const medianCPIFredSeriesRecord = await getOrFetchMedianCPIFredSeries();
+	const medianCPIFredSeriesRecord =
+		await getOrFetchFredSeriesRecord('MEDCPIM158SFRBCLE');
 
 	if (
 		medianCPIFredSeriesRecord.lastDataFetch === null ||
