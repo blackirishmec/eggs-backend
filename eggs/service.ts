@@ -1,17 +1,14 @@
 import dotenv from 'dotenv';
 
 import type { FetchDataResponse } from '@/eggs/interface';
-import type {
-	FederalNonfarmMinimumHourlyWage,
-	MedianCPI,
-} from '@prisma/client';
 
 import { prisma } from '@/eggs/database';
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
-import { fetchEggPriceFredData } from '@/eggs/utilities/api/fetchEggPriceFredData';
 import { fetchFederalNonfarmMinimumHourlyWageFredData } from '@/eggs/utilities/api/fetchFederalNonfarmMinimumHourlyWageFredData';
 import { getOrFetchEggPriceRecords } from '@/eggs/utilities/api/getOrFetchEggPriceRecords';
+import { getOrFetchFederalNonfarmMinimumHourlyWageRecords } from '@/eggs/utilities/api/getOrFetchFederalNonfarmMinimumHourlyWageRecords';
 import { getOrFetchFredSeries } from '@/eggs/utilities/api/getOrFetchFredSeries';
+import { getOrFetchMedianCPIRecords } from '@/eggs/utilities/api/getOrFetchMedianCPIRecords';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
 const env = dotenv.config();
@@ -22,44 +19,10 @@ if (env.error) {
 const EggsService = {
 	fetchData: async (): Promise<FetchDataResponse> => {
 		/** Get or Fetch Fred Series */
-		const {
-			medianCPIFredSeriesRecord,
-			federalNonfarmMinimumHourlyWageFredSeriesRecord,
-		} = await getOrFetchFredSeries();
+		const { federalNonfarmMinimumHourlyWageFredSeriesRecord } =
+			await getOrFetchFredSeries();
 
 		/** Update DB via API Fetch */
-
-		/** Median CPI */
-		if (
-			medianCPIFredSeriesRecord.lastDataFetch === null ||
-			addOneMonthToDateString(medianCPIFredSeriesRecord.lastDataFetch) <
-				new Date()
-		) {
-			const medianCPIFredData =
-				await fetchFederalNonfarmMinimumHourlyWageFredData();
-
-			if (medianCPIFredData.length < 1) {
-				return {
-					success: false,
-					message: 'Fetched medianCPIFredData empty!',
-				};
-			}
-
-			await prisma.$transaction([
-				prisma.medianCPI.createMany({
-					data: medianCPIFredData,
-				}),
-				prisma.fredSeries.update({
-					where: {
-						id: medianCPIFredSeriesRecord.id,
-					},
-					data: {
-						lastDataFetch: formatDateCustom(new Date()),
-					},
-				}),
-			]);
-		}
-
 		/** Federal Nonfarm Minimum Hourly Wage */
 		if (
 			federalNonfarmMinimumHourlyWageFredSeriesRecord.lastDataFetch ===
@@ -99,19 +62,11 @@ const EggsService = {
 		const eggPriceRecords = await getOrFetchEggPriceRecords();
 
 		/** Median CPI */
-		const medianCPIRecords: MedianCPI[] = await prisma.medianCPI.findMany({
-			orderBy: {
-				date: 'desc',
-			},
-		});
+		const medianCPIRecords = await getOrFetchMedianCPIRecords();
 
 		/** Federal Nonfarm Minimum Hourly Wage */
-		const federalNonfarmMinimumHourlyWageRecords: FederalNonfarmMinimumHourlyWage[] =
-			await prisma.federalNonfarmMinimumHourlyWage.findMany({
-				orderBy: {
-					date: 'desc',
-				},
-			});
+		const federalNonfarmMinimumHourlyWageRecords =
+			await getOrFetchFederalNonfarmMinimumHourlyWageRecords();
 
 		return {
 			success: true,

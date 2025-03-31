@@ -1,8 +1,9 @@
+import { prisma } from '@/eggs/database';
+
 import type { FredSeriesResponse } from '@/eggs/interface';
 import type { FredSeries } from '@prisma/client';
 
 import { axiosInstance } from '@/eggs/axiosInstance';
-import { prisma } from '@/eggs/database';
 import { transformFredSeriesResponse } from '@/eggs/transformers/transformFredSeriesResponse';
 
 export async function getOrFetchFederalNonfarmMinimumHourlyWageFredSeriesRecord(): Promise<FredSeries> {

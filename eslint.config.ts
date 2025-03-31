@@ -117,6 +117,11 @@ export default [
 							position: 'before',
 						},
 						{
+							pattern: '@/eggs/database',
+							group: 'external',
+							position: 'before',
+						},
+						{
 							pattern: '@/types/**',
 							group: 'type',
 							position: 'after',

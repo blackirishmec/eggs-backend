@@ -1,6 +1,7 @@
+import { prisma } from '@/eggs/database';
+
 import type { EggPrice } from '@prisma/client';
 
-import { prisma } from '@/eggs/database';
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
 import { fetchEggPriceFredData } from '@/eggs/utilities/api/fetchEggPriceFredData';
 import { getOrFetchEggPriceFredSeries } from '@/eggs/utilities/api/getOrFetchEggPriceFredSeriesRecord';
@@ -46,15 +47,9 @@ export async function getOrFetchEggPriceRecords(): Promise<EggPrice[]> {
 		]);
 	}
 
-	const eggPriceRecords = await prisma.eggPrice.findMany({
+	return await prisma.eggPrice.findMany({
 		orderBy: {
 			date: 'desc',
 		},
 	});
-
-	if (eggPriceRecords === undefined) {
-		return [];
-	}
-
-	return eggPriceRecords;
 }
