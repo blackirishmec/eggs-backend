@@ -56,5 +56,10 @@ export async function getOrFetchEggPriceRecords(
 		orderBy: {
 			date: orderBy,
 		},
+		where: {
+			date: {
+				gte: new Date('2009-08-01').toISOString(),
+			},
+		},
 	});
 }
