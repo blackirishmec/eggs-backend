@@ -30,7 +30,9 @@ export async function getMinimumEggsTrendData(
 	);
 
 	const currentCPIForAllUrbanConsumersRecord =
-		cPIForAllUrbanConsumersRecords[0];
+		cPIForAllUrbanConsumersRecords[
+			cPIForAllUrbanConsumersRecords.length - 1
+		];
 
 	return eggPriceRecords.map(eggPriceRecordForMonth => {
 		let federalNonfarmMinimumHourlyWageForMonth =
