@@ -2,12 +2,12 @@ import { prisma } from '@/eggs/database';
 
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
 import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSeriesObservationData';
-import { getOrFetchFederalNonfarmMinimumHourlyWageFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFederalNonfarmMinimumHourlyWageFredSeriesRecord';
+import { getOrFetchFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
 export async function getOrFetchFederalNonfarmMinimumHourlyWageRecords() {
 	const federalNonfarmMinimumHourlyWageFredSeriesRecord =
-		await getOrFetchFederalNonfarmMinimumHourlyWageFredSeriesRecord();
+		await getOrFetchFredSeriesRecord('FEDMINNFRWG');
 
 	if (
 		federalNonfarmMinimumHourlyWageFredSeriesRecord.lastDataFetch ===
