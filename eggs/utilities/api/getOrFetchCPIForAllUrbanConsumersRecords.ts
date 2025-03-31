@@ -7,9 +7,9 @@ import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSe
 import { getOrFetchFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
-export async function getOrFetchCPIForAllUrbanConsumersRecords(): Promise<
-	CPIForAllUrbanConsumers[]
-> {
+export async function getOrFetchCPIForAllUrbanConsumersRecords(
+	orderBy: 'asc' | 'desc' = 'desc',
+): Promise<CPIForAllUrbanConsumers[]> {
 	const cpiForAllUrbanConsumersFredSeriesRecord =
 		await getOrFetchFredSeriesRecord('CPIAUCNS');
 
@@ -56,7 +56,7 @@ export async function getOrFetchCPIForAllUrbanConsumersRecords(): Promise<
 
 	return await prisma.cPIForAllUrbanConsumers.findMany({
 		orderBy: {
-			date: 'desc',
+			date: orderBy,
 		},
 	});
 }

@@ -7,11 +7,11 @@ import { getOrFetchFederalNonfarmMinimumHourlyWageRecords } from '@/eggs/utiliti
 export async function getMinimumEggsTrendData(
 	adjusted: boolean = false,
 ): Promise<MinimumEggsTrendDataObject[]> {
-	const eggPriceRecords = await getOrFetchEggPriceRecords();
+	const eggPriceRecords = await getOrFetchEggPriceRecords('asc');
 	const federalNonfarmMinimumHourlyWageRecords =
-		await getOrFetchFederalNonfarmMinimumHourlyWageRecords();
+		await getOrFetchFederalNonfarmMinimumHourlyWageRecords('asc');
 	const cPIForAllUrbanConsumersRecords =
-		await getOrFetchCPIForAllUrbanConsumersRecords();
+		await getOrFetchCPIForAllUrbanConsumersRecords('asc');
 
 	const federalNonfarmMinimumHourlyWagePerMonthMap = new Map<string, number>(
 		federalNonfarmMinimumHourlyWageRecords.map(

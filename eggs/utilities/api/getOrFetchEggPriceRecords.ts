@@ -7,7 +7,9 @@ import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSe
 import { getOrFetchFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
-export async function getOrFetchEggPriceRecords(): Promise<EggPrice[]> {
+export async function getOrFetchEggPriceRecords(
+	orderBy: 'asc' | 'desc' = 'desc',
+): Promise<EggPrice[]> {
 	const eggPriceFredSeriesRecord =
 		await getOrFetchFredSeriesRecord('APU0000708111');
 
@@ -52,7 +54,7 @@ export async function getOrFetchEggPriceRecords(): Promise<EggPrice[]> {
 
 	return await prisma.eggPrice.findMany({
 		orderBy: {
-			date: 'desc',
+			date: orderBy,
 		},
 	});
 }

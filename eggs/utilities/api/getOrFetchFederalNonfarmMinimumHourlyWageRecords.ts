@@ -5,7 +5,9 @@ import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSe
 import { getOrFetchFredSeriesRecord } from '@/eggs/utilities/api/getOrFetchFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
-export async function getOrFetchFederalNonfarmMinimumHourlyWageRecords() {
+export async function getOrFetchFederalNonfarmMinimumHourlyWageRecords(
+	orderBy: 'asc' | 'desc' = 'desc',
+) {
 	const federalNonfarmMinimumHourlyWageFredSeriesRecord =
 		await getOrFetchFredSeriesRecord('FEDMINNFRWG');
 
@@ -53,7 +55,7 @@ export async function getOrFetchFederalNonfarmMinimumHourlyWageRecords() {
 
 	return await prisma.federalNonfarmMinimumHourlyWage.findMany({
 		orderBy: {
-			date: 'desc',
+			date: orderBy,
 		},
 	});
 }
