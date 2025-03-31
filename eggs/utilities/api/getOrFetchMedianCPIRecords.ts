@@ -3,7 +3,7 @@ import { prisma } from '@/eggs/database';
 import type { MedianCPI } from '@prisma/client';
 
 import { addOneMonthToDateString } from '@/eggs/utilities/addOneMonthToDateString';
-import { fetchFederalNonfarmMinimumHourlyWageFredData } from '@/eggs/utilities/api/fetchFederalNonfarmMinimumHourlyWageFredData';
+import { fetchFredSeriesObservationData } from '@/eggs/utilities/api/fetchFredSeriesObservationData';
 import { getOrFetchMedianCPIFredSeries } from '@/eggs/utilities/api/getOrFetchMedianCPIFredSeriesRecord';
 import { formatDateCustom } from '@/eggs/utilities/formatDateCustom';
 
@@ -15,8 +15,9 @@ export async function getOrFetchMedianCPIRecords(): Promise<MedianCPI[]> {
 		addOneMonthToDateString(medianCPIFredSeriesRecord.lastDataFetch) <
 			new Date()
 	) {
-		const medianCPIFredData =
-			await fetchFederalNonfarmMinimumHourlyWageFredData();
+		const medianCPIFredData = await fetchFredSeriesObservationData(
+			medianCPIFredSeriesRecord.id,
+		);
 
 		const existingMedianCPIRecordDateObjects = (
 			await prisma.medianCPI.findMany({
