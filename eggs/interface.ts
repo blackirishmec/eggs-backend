@@ -58,7 +58,7 @@ export interface FetchDataResponse {
 	};
 }
 
-export interface GetMinimumEggsResponse {
+export interface GetCurrentMinimumEggsResponse {
 	/** Indicates if the request was successful */
 	success: boolean;
 	/** Error message if the request was not successful */

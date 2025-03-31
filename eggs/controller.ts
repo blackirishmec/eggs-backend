@@ -1,6 +1,9 @@
 import { api, APIError } from 'encore.dev/api';
 
-import type { FetchDataResponse } from '@/eggs/interface';
+import type {
+	FetchDataResponse,
+	GetCurrentMinimumEggsResponse,
+} from '@/eggs/interface';
 
 import EggsService from '@/eggs/service';
 import { sanitizeErrorString } from '@/eggs/utilities/sanitizeErrorString';
@@ -25,9 +28,9 @@ export const data = api(
  */
 export const minimumEggs = api(
 	{ expose: true, method: 'GET', path: '/minimum-eggs' },
-	async (): Promise<FetchDataResponse> => {
+	async (): Promise<GetCurrentMinimumEggsResponse> => {
 		try {
-			return await EggsService.getMinimumEggs();
+			return await EggsService.getCurrentMinimumEggs();
 		} catch (error) {
 			const errorString = sanitizeErrorString(error);
 			throw APIError.aborted(errorString);
