@@ -6,7 +6,6 @@
 	"license": "MPL-2.0",
 	"type": "module",
 	"scripts": {
-		"test": "vitest",
 		"postinstall": "npx prisma generate --schema=eggs/prisma/schema.prisma"
 	},
 	"devDependencies": {
