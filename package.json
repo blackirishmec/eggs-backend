@@ -7,7 +7,7 @@
 	"type": "module",
 	"scripts": {
 		"test": "vitest",
-		"postinstall": "npx prisma generate --schema=users/prisma/schema.prisma"
+		"postinstall": "npx prisma generate --schema=eggs/prisma/schema.prisma"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.23.0",
